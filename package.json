@@ -1,0 +1,16 @@
+{
+  "name": "express_server",
+  "version": "1.0.0",
+  "description": "Practice building express server",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch --watch-preserve-output server"
+  },
+  "author": "Liene",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
