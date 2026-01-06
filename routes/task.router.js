@@ -29,6 +29,10 @@ taskRouter.put("/:id", (req, res) => {
   res.status(200).send(taskUpdated);
 });
 
+taskRouter.patch("/:id", (req, res) => {
+  const taskId = req.params.id;
+});
+
 taskRouter.delete("/:id", (req, res) => {
   res.sendStatus(204);
 });
