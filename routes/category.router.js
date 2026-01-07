@@ -1,31 +1,16 @@
 import { Router } from "express";
+import { categoryController } from "../controllers/category.controller.js";
 
 const categoryRouter = Router();
 
-categoryRouter.get("/", (req, res) => {
-  res.send("See all Categories");
-});
+categoryRouter.get("/", categoryController.getAll);
 
-categoryRouter.get("/:id", (req, res) => {
-  const id = req.params.id;
-  res.send(`Category with ID ${id}`);
-});
+categoryRouter.get("/:id", categoryController.getById);
 
-categoryRouter.post("/", (req, res) => {
-  const categoryToInsert = req.body;
-  res.status(201).send(categoryToInsert);
-});
+categoryRouter.post("/", categoryController.insert);
 
-categoryRouter.put("/:id", (req, res) => {
-  const categoryId = req.params.id;
-  const categoryUpdated = req.body;
-  categoryUpdated.id = categoryId;
+categoryRouter.put("/:id", categoryController.update);
 
-  res.status(200).send(categoryUpdated);
-});
-
-categoryRouter.delete("/:id", (req, res) => {
-  res.sendStatus(204);
-});
+categoryRouter.delete("/:id", categoryController.delete);
 
 export default categoryRouter;
