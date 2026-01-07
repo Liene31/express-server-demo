@@ -1,4 +1,4 @@
-import { categories, tasks } from "./fakeDb.js";
+import { tasks } from "./fakeDb.js";
 
 export const fakeTaskService = {
   find: () => {
