@@ -1,10 +1,27 @@
+import { fakeTaskService } from "../services/fake/fake.task.service.js";
+
 export const taskController = {
   getAll: (req, res) => {
-    res.send("List of all the tasks");
+    const tasks = fakeTaskService.find();
+
+    //Version 1
+    res.status(200).json(tasks);
+
+    //Version 2
+    // const dataToSend = {
+    //   count: tasks.length,
+    //   tasks: tasks,
+    // };
+    // res.status(200).json(dataToSend);
   },
   getById: (req, res) => {
-    const id = req.params.id;
-    res.send(`Task No ${id}`);
+    const id = parseInt(req.params.id);
+    const task = fakeTaskService.findById(id);
+
+    if (!task) {
+      res.status(404).json({ statusCode: 404, message: "Task not found" });
+    }
+    res.status(200).json(task);
   },
   getByUserId: (req, res) => {
     const userId = req.params.id;
