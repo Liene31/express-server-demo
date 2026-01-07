@@ -28,8 +28,11 @@ export const taskController = {
     res.send(`List of tasks for user with id ${userId}`);
   },
   insert: (req, res) => {
-    const taskToInsert = req.body;
-    res.status(201).send(taskToInsert);
+    const taskToAdd = req.body;
+    const addedTask = fakeTaskService.create(taskToAdd);
+
+    res.location(`/api/tasks/${addedTask.id}`);
+    res.status(201).json(addedTask);
   },
   update: (req, res) => {
     const taskId = req.params.id;
