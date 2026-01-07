@@ -1,41 +1,32 @@
 import { Router } from "express";
+import { taskController } from "../controllers/task.controller.js";
 
 const taskRouter = Router();
 
-taskRouter.get("/", (req, res) => {
-  res.send("List of all the tasks");
-  console.log(req.query);
-});
+//More structured version to organize the code based on URL
+// taskRouter
+//   .route("/")
+//   .get((req, res) => {
+//     res.send("List of all the tasks");
+//     console.log(req.query);
+//   })
+//   .post((req, res) => {
+//     const taskToInsert = req.body;
+//     res.status(201).send(taskToInsert);
+//   });
 
-taskRouter.get("/user/:id", (req, res) => {
-  const userId = req.params.id;
-  res.send(`List of tasks for user with id ${userId}`);
-});
+taskRouter.get("/", taskController.getAll);
 
-taskRouter.get("/:id", (req, res) => {
-  const id = req.params.id;
-  res.send(`Task No ${id}`);
-});
+taskRouter.get("/:id", taskController.getById);
 
-taskRouter.post("/", (req, res) => {
-  const taskToInsert = req.body;
-  res.status(201).send(taskToInsert);
-});
+taskRouter.get("/user/:id", taskController.getByUserId);
 
-taskRouter.put("/:id", (req, res) => {
-  const taskId = req.params.id;
-  const taskUpdated = req.body;
-  taskUpdated.id = taskId;
-  res.status(200).send(taskUpdated);
-});
+taskRouter.post("/", taskController.insert);
 
-taskRouter.patch("/:id", (req, res) => {
-  const taskId = req.params.id;
-  const updates = req.body;
-});
+taskRouter.put("/:id", taskController.update);
 
-taskRouter.delete("/:id", (req, res) => {
-  res.sendStatus(204);
-});
+taskRouter.patch("/:id", taskController.updateStatus);
+
+taskRouter.delete("/:id", taskController.delete);
 
 export default taskRouter;
