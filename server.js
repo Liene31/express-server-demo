@@ -1,7 +1,7 @@
 import express from "express";
 import router from "./routes/index.js";
 
-const PORT = 8000;
+const { PORT } = process.env;
 
 const app = express();
 

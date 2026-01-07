@@ -31,6 +31,7 @@ taskRouter.put("/:id", (req, res) => {
 
 taskRouter.patch("/:id", (req, res) => {
   const taskId = req.params.id;
+  const updates = req.body;
 });
 
 taskRouter.delete("/:id", (req, res) => {
