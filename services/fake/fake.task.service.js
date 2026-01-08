@@ -32,13 +32,13 @@ export const fakeTaskService = {
       return task.id === id;
     });
 
-    if (taskToModify === undefined) {
-      return undefined;
+    if (!taskToModify) {
+      return false;
     }
 
     let keys = Object.keys(modification);
 
-    keys.map((key) => {
+    keys.forEach((key) => {
       taskToModify[key] = modification[key];
     });
 
@@ -50,35 +50,43 @@ export const fakeTaskService = {
       return task.id === id;
     });
 
+    console.log(taskToModify);
+    console.log(modification.key);
+
     if (taskToModify === undefined) {
       return undefined;
     }
 
     let keys = Object.keys(modification);
+    let value = Object.values(modification);
+    console.log(value);
 
-    keys.map((key) => {
-      taskToModify[key] = modification[key];
-    });
+    taskToModify[keys] = [...value];
 
-    console.log(taskToModify);
+    // keys.map((key) => {
+    //   taskToModify[key] = modification[key];
+    // });
 
     return modification;
   },
 
   delete: (taskId) => {
-    let testTaskTable = tasks;
     const taskToDelete = tasks.find((task) => {
       return task.id === taskId;
     });
 
-    if (taskToDelete === undefined) {
+    if (!taskToDelete) {
       return false;
     }
 
-    testTaskTable = testTaskTable.filter((task) => {
+    const newTasks = tasks.filter((task) => {
       return task.id !== taskId;
     });
+    //Cleans my tasks (fakeDb) and push all the tasks not deleted to it
+    tasks.splice(0);
+    tasks.push(...newTasks);
 
-    tasks.push(testTaskTable);
+    console.log(tasks);
+    return true;
   },
 };

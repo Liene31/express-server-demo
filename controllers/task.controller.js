@@ -38,8 +38,10 @@ export const taskController = {
     const taskId = parseInt(req.params.id);
     const taskToUpdate = req.body;
     const taskUpdated = fakeTaskService.update(taskId, taskToUpdate);
-    if (taskUpdated === undefined) {
-      res.status(404).json({ statusCode: 404, message: "Task not found" });
+    if (!taskUpdated) {
+      return res
+        .status(404)
+        .json({ statusCode: 404, message: "Task not found" });
     }
     res.status(200).json(taskUpdated);
   },
@@ -55,6 +57,12 @@ export const taskController = {
   delete: (req, res) => {
     const taskId = parseInt(req.params.id);
     const isDeleted = fakeTaskService.delete(taskId);
-    res.sendStatus(204);
+    if (isDeleted) {
+      res.sendStatus(204);
+    } else {
+      res
+        .status(404)
+        .json({ statusCode: 404, message: `Task with id ${taskId} not found` });
+    }
   },
 };

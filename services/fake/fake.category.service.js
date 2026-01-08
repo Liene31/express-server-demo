@@ -12,11 +12,6 @@ export const fakeCategoryService = {
   },
 
   create: (categoryToAdd) => {
-    categories.forEach((category) => {
-      if (category.name.toLowerCase() === categoryToAdd.name.toLowerCase()) {
-      }
-    });
-
     //Finds the max number between IDs
     const idMax = Math.max(...categories.map((category) => category.id));
     //When max No found, add + 1
@@ -26,3 +21,5 @@ export const fakeCategoryService = {
     return categoryToAdd;
   },
 };
+
+//CREATE SEPARATE FUNCTION TO CHECK IF ID EXISTS, CHECK IF ID EXISTS, AND ONLY THEN CONTINUOS WITH OTHER FUNCTIONS
