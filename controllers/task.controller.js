@@ -24,26 +24,37 @@ export const taskController = {
     res.status(200).json(task);
   },
   getByUserId: (req, res) => {
-    const userId = req.params.id;
-    res.send(`List of tasks for user with id ${userId}`);
+    const userId = parseInt(req.params.id);
+    const tasks = fakeTaskService.findByUserId(userId);
+    res.status(200).json(tasks);
   },
   insert: (req, res) => {
     const taskToAdd = req.body;
     const addedTask = fakeTaskService.create(taskToAdd);
-
     res.location(`/api/tasks/${addedTask.id}`);
     res.status(201).json(addedTask);
   },
   update: (req, res) => {
-    const taskId = req.params.id;
-    const taskUpdated = req.body;
-    taskUpdated.id = taskId;
-    res.status(200).send(taskUpdated);
+    const taskId = parseInt(req.params.id);
+    const taskToUpdate = req.body;
+    const taskUpdated = fakeTaskService.update(taskId, taskToUpdate);
+    if (taskUpdated === undefined) {
+      res.status(404).json({ statusCode: 404, message: "Task not found" });
+    }
+    res.status(200).json(taskUpdated);
   },
   updateStatus: (req, res) => {
-    res.send({ id: req.params.id, isDone: req.body.isDone });
+    const taskId = parseInt(req.params.id);
+    const modification = req.body;
+    const updatedStatus = fakeTaskService.updateStatus(taskId, modification);
+    if (updatedStatus === undefined) {
+      res.status(404).json({ statusCode: 404, message: "Task not found" });
+    }
+    res.status(200).json(updatedStatus);
   },
   delete: (req, res) => {
+    const taskId = parseInt(req.params.id);
+    const isDeleted = fakeTaskService.delete(taskId);
     res.sendStatus(204);
   },
 };

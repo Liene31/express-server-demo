@@ -1,14 +1,19 @@
+import { fakeCategoryService } from "../services/fake/fake.category.service.js";
+
 export const categoryController = {
   getAll: (req, res) => {
-    res.send("See all Categories");
+    const categories = fakeCategoryService.find();
+    res.status(200).json(categories);
   },
   getById: (req, res) => {
-    const id = req.params.id;
-    res.send(`Category with ID ${id}`);
+    const id = parseInt(req.params.id);
+    const category = fakeCategoryService.findById(id);
+    res.status(200).json(category);
   },
   insert: (req, res) => {
-    const categoryToInsert = req.body;
-    res.status(201).send(categoryToInsert);
+    const categoryToAdd = req.body;
+    const addedCategory = fakeCategoryService.create(categoryToAdd);
+    res.status(201).send(addedCategory);
   },
   update: (req, res) => {
     const categoryId = req.params.id;
