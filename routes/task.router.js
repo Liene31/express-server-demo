@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { taskController } from "../controllers/task.controller.js";
+import { idValidatorMiddleware } from "../middlewares/idValidator.middleware.js";
 
 const taskRouter = Router();
 
@@ -17,16 +18,16 @@ const taskRouter = Router();
 
 taskRouter.get("/", taskController.getAll);
 
-taskRouter.get("/:id", taskController.getById);
+taskRouter.get("/:id", idValidatorMiddleware(), taskController.getById);
 
 taskRouter.get("/user/:id", taskController.getByUserId);
 
 taskRouter.post("/", taskController.insert);
 
-taskRouter.put("/:id", taskController.update);
+taskRouter.put("/:id", idValidatorMiddleware(), taskController.update);
 
-taskRouter.patch("/:id", taskController.updateStatus);
+taskRouter.patch("/:id", idValidatorMiddleware(), taskController.updateStatus);
 
-taskRouter.delete("/:id", taskController.delete);
+taskRouter.delete("/:id", idValidatorMiddleware(), taskController.delete);
 
 export default taskRouter;
