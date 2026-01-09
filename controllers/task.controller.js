@@ -37,7 +37,14 @@ export const taskController = {
   update: (req, res) => {
     const taskId = parseInt(req.params.id);
     const taskToUpdate = req.body;
+
+    //First check if task exist, send an res message if not
+    //
+
+    //And if task exists continue with this
     const taskUpdated = fakeTaskService.update(taskId, taskToUpdate);
+
+    //Don't need this part because it's checked already above
     if (!taskUpdated) {
       return res
         .status(404)
@@ -47,8 +54,15 @@ export const taskController = {
   },
   updateStatus: (req, res) => {
     const taskId = parseInt(req.params.id);
-    const modification = req.body;
+    const modification = req.body.isDone;
+
+    //First do findById to check if the task exists
+    //------
+
+    //And only after do this when we know that task exist
     const updatedStatus = fakeTaskService.updateStatus(taskId, modification);
+
+    //Will not need this since existence of the task will be check above
     if (updatedStatus === undefined) {
       res.status(404).json({ statusCode: 404, message: "Task not found" });
     }

@@ -28,6 +28,9 @@ export const fakeTaskService = {
   },
 
   update: (id, modification) => {
+    //I can access whats in modification object with dot ==> modification.name etc
+    //Exclude ID since we don't modify + status (isDone) since it has a separate function (updateStatus)
+
     const taskToModify = tasks.find((task) => {
       return task.id === id;
     });
@@ -35,6 +38,10 @@ export const fakeTaskService = {
     if (!taskToModify) {
       return false;
     }
+
+    //Manual way, to change line by line
+    // taskToModify.name = modification.name
+    // taskToModify.category = modification.category
 
     let keys = Object.keys(modification);
 
@@ -57,17 +64,19 @@ export const fakeTaskService = {
       return undefined;
     }
 
-    let keys = Object.keys(modification);
-    let value = Object.values(modification);
-    console.log(value);
+    taskToModify.isDone = modification;
 
-    taskToModify[keys] = [...value];
+    // let keys = Object.keys(modification);
+    // let value = Object.values(modification);
+    // console.log(value);
+
+    // taskToModify[keys] = [...value];
 
     // keys.map((key) => {
     //   taskToModify[key] = modification[key];
     // });
 
-    return modification;
+    return taskToModify;
   },
 
   delete: (taskId) => {
