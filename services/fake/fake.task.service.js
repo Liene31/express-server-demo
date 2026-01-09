@@ -57,9 +57,6 @@ export const fakeTaskService = {
       return task.id === id;
     });
 
-    console.log(taskToModify);
-    console.log(modification.key);
-
     if (taskToModify === undefined) {
       return undefined;
     }
@@ -95,7 +92,6 @@ export const fakeTaskService = {
     tasks.splice(0);
     tasks.push(...newTasks);
 
-    console.log(tasks);
     return true;
   },
 };
