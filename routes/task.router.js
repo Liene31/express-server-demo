@@ -24,7 +24,7 @@ taskRouter.get("/:id", idValidatorMiddleware(), taskController.getById);
 
 taskRouter.get("/user/:id", taskController.getByUserId);
 
-taskRouter.post("/", isValidValue(), taskController.insert);
+taskRouter.post("/", isValidName(), taskController.insert);
 
 taskRouter.put(
   "/:id",
