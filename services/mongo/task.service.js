@@ -46,6 +46,15 @@ export const taskService = {
       throw new Error(err);
     }
   },
+
+  update: async (id, task) => {
+    try {
+      const updatedTask = await Task.findById(id).updateOne(task);
+      console.log(updatedTask);
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
   delete: async (id) => {
     try {
       const taskToDelete = await Task.findByIdAndDelete(id);
