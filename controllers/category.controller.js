@@ -38,16 +38,15 @@ export const categoryController = {
           statusCode: 409,
           message: `Category ${categoryToAdd.name} already exist`,
         });
+      } else {
+        const addedCategory = await categoryService.create(categoryToAdd);
+        res.location(`/api/categories/${addedCategory.id}`);
+        res.status(201).send(addedCategory);
       }
-      ///
     } catch (err) {
       console.log(err);
       res.status(500).json({ statusCode: 500, message: "DB error" });
     }
-    // const addedCategory = fakeCategoryService.create(categoryToAdd);
-
-    // res.location(`/api/categories/${addedCategory.id}`);
-    // res.status(201).send(addedCategory);
   },
   update: (req, res) => {
     const categoryId = req.params.id;

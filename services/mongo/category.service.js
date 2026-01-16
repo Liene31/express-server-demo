@@ -4,7 +4,6 @@ export const categoryService = {
   find: async () => {
     try {
       const categories = await Category.find();
-      console.log(categories);
       return categories;
     } catch (err) {
       console.log(err);
@@ -24,7 +23,9 @@ export const categoryService = {
 
   create: async (category) => {
     try {
-      ///
+      const categoryToAdd = Category(category);
+      await categoryToAdd.save();
+      return categoryToAdd;
     } catch (err) {
       console.log(err);
       throw new Error(err);

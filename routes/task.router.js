@@ -20,11 +20,11 @@ const taskRouter = Router();
 
 taskRouter.get("/", taskController.getAll);
 
-taskRouter.get("/:id", idValidatorMiddleware(), taskController.getById);
+taskRouter.get("/:id", taskController.getById);
 
 taskRouter.get("/user/:id", taskController.getByUserId);
 
-taskRouter.post("/", isValidName(), taskController.insert);
+taskRouter.post("/", taskController.insert);
 
 taskRouter.put(
   "/:id",
