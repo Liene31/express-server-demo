@@ -3,7 +3,22 @@ import { Task } from "../../models/task.model.js";
 export const taskService = {
   find: async () => {
     try {
-      const tasks = await Task.find();
+      const tasks = await Task.find()
+        .populate({
+          // links with category and indicates which values to show from category
+          path: "categoryId",
+          select: { id: 1, name: 1, icon: 1 },
+        })
+        .populate({
+          // links with user and indicates which values to show from user
+          path: "fromUserId",
+          select: { id: 1, firstName: 1, lastName: 1 },
+        })
+        .populate({
+          // links with user and indicates which values to show from user
+          path: "toUserId",
+          select: { id: 1, firstName: 1, lastName: 1 },
+        });
       return tasks;
     } catch (err) {
       console.log(err);
@@ -12,7 +27,22 @@ export const taskService = {
   },
   findById: async (id) => {
     try {
-      const searchedTask = await Task.findById(id);
+      const searchedTask = await Task.findById(id)
+        .populate({
+          // links with category and indicates which values to show from category
+          path: "categoryId",
+          select: { id: 1, name: 1, icon: 1 },
+        })
+        .populate({
+          // links with user and indicates which values to show from user
+          path: "fromUserId",
+          select: { id: 1, firstName: 1, lastName: 1 },
+        })
+        .populate({
+          // links with user and indicates which values to show from user
+          path: "toUserId",
+          select: { id: 1, firstName: 1, lastName: 1 },
+        });
       return searchedTask;
     } catch (err) {
       throw new Error(err);

@@ -11,7 +11,7 @@ export const taskController = {
       res.status(200).json(dataToSend);
     } catch (err) {
       console.log(err);
-      throw new Error(err);
+      res.status(500).json({ statusCode: 500, message: "DB error" });
     }
   },
   getById: async (req, res) => {
@@ -23,7 +23,7 @@ export const taskController = {
       }
       res.status(200).json(task);
     } catch (err) {
-      throw new Error(err);
+      res.status(500).json({ statusCode: 500, message: "DB error" });
     }
   },
   getByUserId: async (req, res) => {
@@ -46,7 +46,7 @@ export const taskController = {
       res.status(201).json(addedTask);
     } catch (err) {
       console.log(err);
-      throw new Error(err);
+      res.status(500).json({ statusCode: 500, message: "DB error" });
     }
   },
   update: (req, res) => {
