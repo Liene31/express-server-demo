@@ -51,7 +51,22 @@ export const taskService = {
 
   findAssignedTasksTo: async (id) => {
     try {
-      const tasksAssigned = await Task.find({ toUserId: id });
+      const tasksAssigned = await Task.find({ toUserId: id })
+        .populate({
+          // links with category and indicates which values to show from category
+          path: "categoryId",
+          select: { id: 1, name: 1, icon: 1 },
+        })
+        .populate({
+          // links with user and indicates which values to show from user
+          path: "fromUserId",
+          select: { id: 1, firstName: 1, lastName: 1 },
+        })
+        .populate({
+          // links with user and indicates which values to show from user
+          path: "toUserId",
+          select: { id: 1, firstName: 1, lastName: 1 },
+        });
       return tasksAssigned;
     } catch (err) {
       throw new Error(err);
@@ -60,7 +75,22 @@ export const taskService = {
 
   findGivenTasksBy: async (id) => {
     try {
-      const tasksGiven = await Task.find({ fromUserId: id });
+      const tasksGiven = await Task.find({ fromUserId: id })
+        .populate({
+          // links with category and indicates which values to show from category
+          path: "categoryId",
+          select: { id: 1, name: 1, icon: 1 },
+        })
+        .populate({
+          // links with user and indicates which values to show from user
+          path: "fromUserId",
+          select: { id: 1, firstName: 1, lastName: 1 },
+        })
+        .populate({
+          // links with user and indicates which values to show from user
+          path: "toUserId",
+          select: { id: 1, firstName: 1, lastName: 1 },
+        });
       return tasksGiven;
     } catch (err) {
       throw new Error(err);
@@ -86,10 +116,14 @@ export const taskService = {
     }
   },
   delete: async (id) => {
+    console.log(id);
     try {
       const taskToDelete = await Task.findByIdAndDelete(id);
+
       if (taskToDelete) {
         return true;
+      } else {
+        return false;
       }
     } catch (err) {
       throw new Error(err);

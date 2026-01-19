@@ -29,14 +29,19 @@ export const taskController = {
   getByUserId: async (req, res) => {
     const userId = req.params.id;
 
-    const tasksToDo = await taskService.findAssignedTasksTo(userId);
-    const tasksGiven = await taskService.findGivenTasksBy(userId);
+    try {
+      const tasksToDo = await taskService.findAssignedTasksTo(userId);
+      const tasksGiven = await taskService.findGivenTasksBy(userId);
 
-    const dataToSend = {
-      tasksToDo: tasksToDo,
-      tasksGiven: tasksGiven,
-    };
-    res.status(200).json(dataToSend);
+      const dataToSend = {
+        tasksToDo: tasksToDo,
+        tasksGiven: tasksGiven,
+      };
+      res.status(200).json(dataToSend);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ statusCode: 500, message: "DB error" });
+    }
   },
   insert: async (req, res) => {
     const taskToAdd = req.body;
@@ -84,14 +89,20 @@ export const taskController = {
     res.status(200).json(updatedStatus);
   },
   delete: async (req, res) => {
-    const taskId = req.params.id;
     try {
+      const taskId = req.params.id;
       const isDeleted = await taskService.delete(taskId);
+
       if (isDeleted) {
         res.sendStatus(204);
+      } else {
+        res.sendStatus(404).json({
+          statusCode: 404,
+          message: "Not possible to delete, the task doesn't exist",
+        });
       }
     } catch (err) {
-      throw new Error(err);
+      res.status(500).json({ statusCode: 500, message: "DB error" });
     }
   },
 };
