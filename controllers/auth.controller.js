@@ -23,6 +23,23 @@ export const authController = {
   },
 
   login: async (req, res) => {
-    res.sendStatus(501);
+    try {
+      const credentials = req.body;
+      const userFound = await authService.findByCredentials(credentials);
+      if (!userFound) {
+        res
+          .status(401)
+          .json({ statusCode: 401, message: "Connection info is wrong" });
+      } else {
+        res.status(200).json({
+          id: userFound._id,
+          firstName: userFound.firstName,
+          lastName: userFound.lastName,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
   },
 };
