@@ -1,4 +1,5 @@
 import { authService } from "../services/mongo/auth.service.js";
+import { jwtUtils } from "./utils/jwt.utils.js";
 
 export const authController = {
   register: async (req, res) => {
@@ -31,10 +32,12 @@ export const authController = {
           .status(401)
           .json({ statusCode: 401, message: "Connection info is wrong" });
       } else {
+        const token = await jwtUtils.generate(userFound);
         res.status(200).json({
           id: userFound._id,
           firstName: userFound.firstName,
           lastName: userFound.lastName,
+          token: token,
         });
       }
     } catch (err) {
