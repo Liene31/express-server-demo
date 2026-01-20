@@ -3,6 +3,7 @@ import { taskController } from "../controllers/task.controller.js";
 import { idValidatorMiddleware } from "../middlewares/idValidator.middleware.js";
 import { isValidName } from "../middlewares/isValidName.js";
 import { isValidValue } from "../middlewares/isValidValue.js";
+import { authMiddleware } from "../middlewares/auth/auth.middleware.js";
 
 const taskRouter = Router();
 
@@ -24,20 +25,20 @@ taskRouter.get("/:id", taskController.getById);
 
 taskRouter.get("/user/:id", taskController.getByUserId);
 
-taskRouter.post("/", taskController.insert);
+taskRouter.post("/", authMiddleware(), taskController.insert);
 
 taskRouter.put(
   "/:id",
   isValidName(),
   idValidatorMiddleware(),
-  taskController.update
+  taskController.update,
 );
 
 taskRouter.patch(
   "/:id",
   isValidValue(),
   idValidatorMiddleware(),
-  taskController.updateStatus
+  taskController.updateStatus,
 );
 
 taskRouter.delete("/:id", idValidatorMiddleware(), taskController.delete);
