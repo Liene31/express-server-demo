@@ -10,7 +10,6 @@ export const authMiddleware = () => {
       });
     } else {
       const token = authorization.split(" ")[1];
-      console.log(token);
       if (!token) {
         res.status(401).json({
           statusCode: 401,
