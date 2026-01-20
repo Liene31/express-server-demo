@@ -26,5 +26,22 @@ export const jwtUtils = {
     });
   },
 
-  decode: (token) => {},
+  decode: (token) => {
+    return new Promise((resolve, reject) => {
+      if (!token) {
+        reject(new Error("Token has not been received"));
+      }
+      const options = {
+        audience: JWT_AUDIENCE,
+        issuer: JWT_ISSUER,
+      };
+      jwt.verify(token, JWT_SECRET, options, (error, payload) => {
+        if (error) {
+          reject(error);
+        }
+
+        resolve(payload);
+      });
+    });
+  },
 };
