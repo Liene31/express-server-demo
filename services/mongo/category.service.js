@@ -32,6 +32,28 @@ export const categoryService = {
     }
   },
 
+  delete: async (id) => {
+    try {
+      const categoryToDelete = await Category.findByIdAndDelete(id);
+      console.log(categoryToDelete);
+      if (categoryToDelete) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
+
+  isUsed: async (id) => {
+    try {
+      //////
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
+
   nameAlreadyExist: async (name) => {
     try {
       const searchedCategory = await Category.findOne({ name: name });

@@ -99,7 +99,7 @@ export const taskController = {
       if (isDeleted) {
         res.sendStatus(204);
       } else {
-        res.sendStatus(404).json({
+        res.status(404).json({
           statusCode: 404,
           message: "Not possible to delete, the task doesn't exist",
         });

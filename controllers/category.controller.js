@@ -54,7 +54,23 @@ export const categoryController = {
     categoryUpdated.id = categoryId;
     res.status(200).send(categoryUpdated);
   },
-  delete: (req, res) => {
-    res.sendStatus(204);
+  delete: async (req, res) => {
+    try {
+      const categoryId = req.params.id;
+      const isUsed = await categoryService.isUsed(categoryId);
+      const isDeleted = await categoryService.delete(categoryId);
+      console.log(isDeleted);
+      if (isDeleted) {
+        res.sendStatus(204);
+      } else {
+        res.status(404).json({
+          statusCode: 404,
+          message:
+            "Not possible to delete the category, the category doesn't exist",
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ statusCode: 500, message: "DB error" });
+    }
   },
 };
