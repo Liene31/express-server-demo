@@ -2,8 +2,11 @@ import { taskService } from "../services/mongo/task.service.js";
 
 export const taskController = {
   getAll: async (req, res) => {
+    const query = req.query;
+    // console.log(query);
+
     try {
-      const tasks = await taskService.find();
+      const tasks = await taskService.find(query);
       const dataToSend = {
         count: tasks.length,
         tasks: tasks,

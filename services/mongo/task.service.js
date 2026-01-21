@@ -1,9 +1,30 @@
 import { Task } from "../../models/task.model.js";
 
 export const taskService = {
-  find: async () => {
+  find: async (query) => {
     try {
-      const tasks = await Task.find()
+      const { isDone, categoryId } = query;
+
+      let isDoneFilter;
+
+      if (isDone === undefined) {
+        isDoneFilter = {};
+      } else {
+        isDoneFilter = { isDone: isDone };
+      }
+
+      let categoryFilter;
+
+      if (!categoryId) {
+        categoryFilter = {};
+      } else if (Array.isArray(categoryId)) {
+        categoryFilter = { categoryId: { $in: categoryId } };
+      } else {
+        categoryFilter = { categoryId: categoryId };
+      }
+
+      const tasks = await Task.find(isDoneFilter)
+        .and(categoryFilter)
         .populate({
           // links with category and indicates which values to show from category
           path: "categoryId",
