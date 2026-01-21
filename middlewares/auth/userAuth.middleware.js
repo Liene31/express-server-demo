@@ -9,7 +9,7 @@ export const userAuthMiddleware = () => {
       const tokenUser = await User.findById(userId);
       if (!tokenUser) {
         res
-          .statusCode(404)
+          .status(404)
           .json({ statusCode: 404, message: "User doesn't exist" });
       } else {
         if (tokenUser.role === "Admin") {
